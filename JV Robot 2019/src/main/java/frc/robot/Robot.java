@@ -10,10 +10,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.*;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import com.ctre.phoenix.motorcontrol.can.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,10 +30,10 @@ public class Robot extends IterativeRobot {
     Double leftstick;
     Double rightstick;
     Joystick xbox = new Joystick(0);
-    VictorSP frontright = new VictorSP(0);
-    VictorSP frontleft = new VictorSP(1);
-    VictorSP backright = new VictorSP(2);
-    VictorSP backleft = new VictorSP(3);
+    WPI_TalonSRX frontright = new WPI_TalonSRX(0);
+    WPI_TalonSRX frontleft = new WPI_TalonSRX(1);
+    WPI_TalonSRX backright = new WPI_TalonSRX(2);
+    WPI_TalonSRX backleft = new WPI_TalonSRX(3);
     SpeedControllerGroup left = new SpeedControllerGroup(frontleft, backleft);
     SpeedControllerGroup right = new SpeedControllerGroup(frontright, backright);
     DifferentialDrive drive = new DifferentialDrive(left, right);
