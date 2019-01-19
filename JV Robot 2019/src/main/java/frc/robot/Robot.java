@@ -29,15 +29,20 @@ public class Robot extends IterativeRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
     Double leftstick;
     Double rightstick;
+    double righttrigger;
+    double lefttrigger;
+    boolean open;
+    boolean close;
     Joystick xbox = new Joystick(0);
-    WPI_TalonSRX frontright = new WPI_TalonSRX(0);
-    WPI_TalonSRX frontleft = new WPI_TalonSRX(1);
-    WPI_TalonSRX backright = new WPI_TalonSRX(2);
-    WPI_TalonSRX backleft = new WPI_TalonSRX(3);
+    WPI_TalonSRX frontright = new WPI_TalonSRX(3);
+    WPI_TalonSRX frontleft = new WPI_TalonSRX(2);
+    WPI_TalonSRX backright = new WPI_TalonSRX(4);
+    WPI_TalonSRX backleft = new WPI_TalonSRX(7);
     SpeedControllerGroup left = new SpeedControllerGroup(frontleft, backleft);
     SpeedControllerGroup right = new SpeedControllerGroup(frontright, backright);
     DifferentialDrive drive = new DifferentialDrive(left, right);
-
+    WPI_TalonSRX openClose = new WPI_TalonSRX(1);
+    WPI_TalonSRX upDown = new WPI_TalonSRX(8);
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -104,7 +109,29 @@ public class Robot extends IterativeRobot {
   public void teleopPeriodic() {
     leftstick = xbox.getRawAxis(1);
     rightstick = xbox.getRawAxis(5);
-    drive.tankDrive(leftstick, rightstick);
+    righttrigger = xbox.getRawAxis(3);
+    lefttrigger = xbox.getRawAxis(2);
+    open = xbox.getRawButton(3); //Button x on the xbox controller
+    close = xbox.getRawButton(4); // Button y on the xbox controller
+    drive.tankDrive(-leftstick, -rightstick);
+    if (righttrigger > 0) {
+      upDown.set(-righttrigger);
+    }
+    else if (lefttrigger > 0) {
+      upDown.set(lefttrigger);
+    }
+    else {
+      upDown.set(0);
+    }
+    if (open == true) {
+      openClose.set(0.5);
+    }
+    else if (close == true) {
+      openClose.set(-0.5);
+    }
+    else {
+      openClose.set(0);
+    }
   }
 
   /**
