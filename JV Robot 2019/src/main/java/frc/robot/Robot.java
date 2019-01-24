@@ -10,10 +10,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.*;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,10 +32,12 @@ public class Robot extends IterativeRobot {
     Double leftstick;
     Double rightstick;
     Joystick xbox = new Joystick(0);
-    VictorSP frontright = new VictorSP(0);
-    VictorSP frontleft = new VictorSP(1);
-    VictorSP backright = new VictorSP(2);
-    VictorSP backleft = new VictorSP(3);
+    Talon frontright = new Talon(0);
+    Talon frontleft = new Talon(1);
+    Talon backright = new Talon(2);
+    Talon backleft = new Talon(3);
+    Talon lift = new Talon(4);
+    Talon claw = new Talon(5);
     SpeedControllerGroup left = new SpeedControllerGroup(frontleft, backleft);
     SpeedControllerGroup right = new SpeedControllerGroup(frontright, backright);
     DifferentialDrive drive = new DifferentialDrive(left, right);
@@ -105,6 +109,31 @@ public class Robot extends IterativeRobot {
     leftstick = xbox.getRawAxis(1);
     rightstick = xbox.getRawAxis(5);
     drive.tankDrive(leftstick, rightstick);
+    if (xbox.getRawButton(3)) {
+      lift.set(0.2);
+      //Lift goes up
+    }
+    else if (xbox.getRawButton(2)) {
+      lift.set(-0.2);
+      //Lift goes down
+    }
+    else {
+      lift.set(0);
+      //Lift doesn't move naturally
+    }
+    if (xbox.getRawButton(1)) {
+      claw.set(0.2);
+      //Claw opens
+    }
+    else if (xbox.getRawButton(4)) {
+      claw.set(-0.2);
+      //Claw shuts
+    }
+    else {
+      claw.set(0);
+      //Claw doesn't move naturally
+    }
+
   }
 
   /**
