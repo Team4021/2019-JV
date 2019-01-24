@@ -36,10 +36,13 @@ public class Robot extends IterativeRobot {
     Talon frontleft = new Talon(1);
     Talon backright = new Talon(2);
     Talon backleft = new Talon(3);
-    Talon lift = new Talon(4);
-    Talon claw = new Talon(5);
+    Talon lift1 = new Talon(4);
+    Talon lift2 = new Talon(5);
+    Talon claw = new Talon(6);
+
     SpeedControllerGroup left = new SpeedControllerGroup(frontleft, backleft);
     SpeedControllerGroup right = new SpeedControllerGroup(frontright, backright);
+    SpeedControllerGroup lift = new SpeedControllerGroup(lift1, lift2);
     DifferentialDrive drive = new DifferentialDrive(left, right);
 
   /**
