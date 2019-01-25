@@ -31,18 +31,22 @@ public class Robot extends IterativeRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
     Double leftstick;
     Double rightstick;
+    //Names drive controls
     Joystick xbox = new Joystick(0);
+
     Talon frontright = new Talon(0);
     Talon frontleft = new Talon(1);
     Talon backright = new Talon(2);
     Talon backleft = new Talon(3);
-    Talon lift1 = new Talon(4);
-    Talon lift2 = new Talon(5);
-    Talon claw = new Talon(6);
-
+    Talon claw = new Talon(4);
+    Talon forback = new Talon(5);
+    Talon lift1 = new Talon(6);
+    Talon lift2 = new Talon(7);
+    //Names all motor controllers
     SpeedControllerGroup left = new SpeedControllerGroup(frontleft, backleft);
     SpeedControllerGroup right = new SpeedControllerGroup(frontright, backright);
     SpeedControllerGroup lift = new SpeedControllerGroup(lift1, lift2);
+    //Puts all motor controllers into groups
     DifferentialDrive drive = new DifferentialDrive(left, right);
 
   /**
@@ -112,11 +116,11 @@ public class Robot extends IterativeRobot {
     leftstick = xbox.getRawAxis(1);
     rightstick = xbox.getRawAxis(5);
     drive.tankDrive(leftstick, rightstick);
-    if (xbox.getRawButton(3)) {
+    if (xbox.getRawButton(6)) {
       lift.set(0.2);
       //Lift goes up
     }
-    else if (xbox.getRawButton(2)) {
+    else if (xbox.getRawButton(5)) {
       lift.set(-0.2);
       //Lift goes down
     }
@@ -136,6 +140,19 @@ public class Robot extends IterativeRobot {
       claw.set(0);
       //Claw doesn't move naturally
     }
+    if (xbox.getRawButton(3)) {
+      forback.set(0.2);
+      //Claw moves forward
+    }
+    else if (xbox.getRawButton(2)) { 
+      forback.set(-0.2);
+      //Claw moves backward
+    }
+    else {
+      forback.set(0);
+      //Claw doesn't move forward or backward naturally
+    }
+
 
   }
 
