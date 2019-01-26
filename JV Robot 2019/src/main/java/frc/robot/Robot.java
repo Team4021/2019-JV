@@ -28,21 +28,21 @@ public class Robot extends IterativeRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-    Double leftstick;
-    Double rightstick;
+    Double leftStick;
+    Double rightStick;
     Joystick joy1 = new Joystick(0);
     Joystick joy2 = new Joystick(1);
-    Talon frontright = new Talon(0);
-    Talon frontleft = new Talon(1);
-    Talon backright = new Talon(2);
-    Talon backleft = new Talon(3);
+    Talon frontRight = new Talon(0);
+    Talon frontLeft = new Talon(1);
+    Talon backRight = new Talon(2);
+    Talon backLeft = new Talon(3);
     Talon claw = new Talon(4);
     Talon forback = new Talon(5);
     Talon lift1 = new Talon(6);
     Talon lift2 = new Talon(7);
     //Names motor controllers
-    SpeedControllerGroup left = new SpeedControllerGroup(frontleft, backleft);
-    SpeedControllerGroup right = new SpeedControllerGroup(frontright, backright);
+    SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, backLeft);
+    SpeedControllerGroup right = new SpeedControllerGroup(frontRight, backRight);
     SpeedControllerGroup lift = new SpeedControllerGroup(lift1, lift2);
     //Combines two motor controllers
     DifferentialDrive drive = new DifferentialDrive(left, right);
@@ -111,9 +111,9 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void teleopPeriodic() {
-    leftstick = joy1.getRawAxis(1);
-    rightstick = joy2.getRawAxis(1);
-    drive.tankDrive(leftstick, rightstick);
+    leftStick = joy1.getRawAxis(1);
+    rightStick = joy2.getRawAxis(1);
+    drive.tankDrive(leftStick, rightStick);
     if (joy2.getRawButton(1)) {
       claw.set(0.2);
       //Claw closes
