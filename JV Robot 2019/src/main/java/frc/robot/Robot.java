@@ -8,14 +8,15 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.drive.*;
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import com.ctre.phoenix.motorcontrol.can.*;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.drive.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,23 +30,22 @@ public class Robot extends IterativeRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  Double leftstick;
-  Double rightstick;
-  double righttrigger;
-  double lefttrigger;
-  boolean open;
-  boolean close;
-  Joystick xbox = new Joystick(0);
-  WPI_TalonSRX frontright = new WPI_TalonSRX(3);
-  WPI_TalonSRX frontleft = new WPI_TalonSRX(2);
-  WPI_TalonSRX backright = new WPI_TalonSRX(4);
-  WPI_TalonSRX backleft = new WPI_TalonSRX(7);
-  SpeedControllerGroup left = new SpeedControllerGroup(frontleft, backleft);
-  SpeedControllerGroup right = new SpeedControllerGroup(frontright, backright);
+  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  NetworkTableEntry tx = table.getEntry("tx");
+  NetworkTableEntry ty = table.getEntry("ty");
+  NetworkTableEntry ta = table.getEntry("ta");
+  double leftStick;
+  double rightStick;
+  Joystick joy1 = new Joystick(0);
+  Joystick joy2 = new Joystick(1);
+  Talon frontRight = new Talon(0);
+  Talon frontLeft = new Talon(1);
+  Talon backRight = new Talon(2);
+  Talon backLeft = new Talon(3);
+
+  SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, backLeft);
+  SpeedControllerGroup right = new SpeedControllerGroup(frontRight, backRight);
   DifferentialDrive drive = new DifferentialDrive(left, right);
-  WPI_TalonSRX openClose = new WPI_TalonSRX(1);
-  WPI_TalonSRX upDown = new WPI_TalonSRX(8);
-  UsbCamera camera;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -56,7 +56,6 @@ public class Robot extends IterativeRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    camera = CameraServer.getInstance().startAutomaticCapture(0);
 
   }
 
@@ -114,27 +113,15 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void teleopPeriodic() {
-    leftstick = xbox.getRawAxis(1);
-    rightstick = xbox.getRawAxis(5);
-    righttrigger = xbox.getRawAxis(3);
-    lefttrigger = xbox.getRawAxis(2);
-    open = xbox.getRawButton(3); // Button x on the xbox controller
-    close = xbox.getRawButton(4); // Button y on the xbox controller
-    drive.tankDrive(-leftstick, -rightstick);
-    if (righttrigger > 0) {
-      upDown.set(-righttrigger);
-    } else if (lefttrigger > 0) {
-      upDown.set(lefttrigger);
-    } else {
-      upDown.set(0);
-    }
-    if (open == true) {
-      openClose.set(0.5);
-    } else if (close == true) {
-      openClose.set(-0.5);
-    } else {
-      openClose.set(0);
-    }
+    leftStick = joy1.getRawAxis(1);
+    rightStick = joy2.getRawAxis(1);
+    drive.tankDrive(leftStick, rightStick);
+    double x = tx.getDouble(0.0);
+    double y = ty.getDouble(0.0);
+    double area = ta.getDouble(0.0);
+    SmartDashboard.putNumber("LimelightX", x);
+    SmartDashboard.putNumber("LimelightY", y);
+    SmartDashboard.putNumber("LimelightArea", area);
   }
 
   /**
