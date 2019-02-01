@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.*;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.RobotDrive;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,10 +28,10 @@ public class Robot extends IterativeRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-    Double leftStick;
-    Double rightStick;
-    Joystick joy1 = new Joystick(0);
-    Joystick joy2 = new Joystick(1);
+    RobotDrive fullSendDrive;
+    double x;
+    double y;
+    Joystick joy = new Joystick(0);
     Talon frontRight = new Talon(0);
     Talon frontLeft = new Talon(3);
     Talon backRight = new Talon(1);
@@ -40,11 +41,11 @@ public class Robot extends IterativeRobot {
     Talon lift1 = new Talon(6);
     Talon lift2 = new Talon(7);
     //Names motor controllers
-    SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, backLeft);
-    SpeedControllerGroup right = new SpeedControllerGroup(frontRight, backRight);
+    SpeedControllerGroup Left = new SpeedControllerGroup(frontLeft, backLeft);
+    SpeedControllerGroup Right = new SpeedControllerGroup(frontRight, backRight);
+    DifferentialDrive PizzaTacoDrive = new DifferentialDrive(Left, Right);
     SpeedControllerGroup lift = new SpeedControllerGroup(lift1, lift2);
     //Combines two motor controllers
-    DifferentialDrive drive = new DifferentialDrive(left, right);
 
   /**
    * This function is run when the robot is first started up and should be
@@ -110,14 +111,14 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void teleopPeriodic() {
-    leftStick = joy1.getRawAxis(1);
-    rightStick = joy2.getRawAxis(1);
-    drive.tankDrive(-leftStick/2, -rightStick/2);
-    if (joy2.getRawButton(1)) {
+    x = joy.getRawAxis(0);
+    y = joy.getRawAxis(1);
+    fullSendDrive.arcadeDrive(x, -y);
+    if (joy.getRawButton(1)) {
       claw.set(0.2);
       //Claw closes
     }
-    else if (joy1.getRawButton(1)) {
+    else if (joy.getRawButton(1)) {
       claw.set(-0.2);
       //Claw opens
     }
@@ -125,11 +126,11 @@ public class Robot extends IterativeRobot {
       claw.set(0);
       //Claw doesn't move naturally
     }
-    if (joy2.getRawButton(3)) {
+    if (joy.getRawButton(3)) {
       forback.set(0.2);
       //moves claw forward
     }
-    else if (joy1.getRawButton(4)) {
+    else if (joy.getRawButton(4)) {
       forback.set(-0.2);
       //moves claw backward
     }
@@ -138,11 +139,11 @@ public class Robot extends IterativeRobot {
       //claw doesn't move naturally
     }
 
-    if (joy2.getRawButton(5)) {
+    if (joy.getRawButton(5)) {
       lift.set(0.2);
     //lift moves up
     }
-    else if (joy1.getRawButton(6)) {
+    else if (joy.getRawButton(6)) {
       lift.set(-0.2);
       //lift moves down
     }
