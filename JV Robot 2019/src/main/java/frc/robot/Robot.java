@@ -112,7 +112,7 @@ public class Robot extends IterativeRobot {
   public void teleopPeriodic() {
     leftStick = joy1.getRawAxis(1);
     rightStick = joy2.getRawAxis(1);
-    drive.tankDrive(-leftStick, -rightStick);
+    drive.tankDrive(-leftStick/2, -rightStick/2);
     if (joy2.getRawButton(1)) {
       claw.set(0.2);
       //Claw closes
@@ -137,6 +137,7 @@ public class Robot extends IterativeRobot {
       forback.set(0);
       //claw doesn't move naturally
     }
+
     if (joy2.getRawButton(5)) {
       lift.set(0.2);
     //lift moves up
