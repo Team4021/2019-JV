@@ -8,15 +8,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,19 +30,6 @@ public class Robot extends IterativeRobot {
   NetworkTableEntry tx = table.getEntry("tx");
   NetworkTableEntry ty = table.getEntry("ty");
   NetworkTableEntry ta = table.getEntry("ta");
-  double leftStick;
-  double rightStick;
-  Joystick joy1 = new Joystick(0);
-  Joystick joy2 = new Joystick(1);
-  Talon frontRight = new Talon(0);
-  Talon frontLeft = new Talon(1);
-  Talon backRight = new Talon(2);
-  Talon backLeft = new Talon(3);
-
-  SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, backLeft);
-  SpeedControllerGroup right = new SpeedControllerGroup(frontRight, backRight);
-  DifferentialDrive drive = new DifferentialDrive(left, right);
-
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -113,9 +96,6 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void teleopPeriodic() {
-    leftStick = joy1.getRawAxis(1);
-    rightStick = joy2.getRawAxis(1);
-    drive.tankDrive(leftStick, rightStick);
     double x = tx.getDouble(0.0);
     double y = ty.getDouble(0.0);
     double area = ta.getDouble(0.0);
