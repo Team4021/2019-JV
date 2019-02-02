@@ -30,6 +30,7 @@ public class Robot extends IterativeRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
     double x;
     double y;
+    // Doubles for driving
     Joystick joy = new Joystick(0);
     Talon frontRight = new Talon(0);
     Talon frontLeft = new Talon(3);
