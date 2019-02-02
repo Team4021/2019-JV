@@ -117,7 +117,7 @@ public class Robot extends IterativeRobot {
       claw.set(0.2);
       //Claw closes
     }
-    else if (joy.getRawButton(1)) {
+    else if (joy.getRawButton(2)) {
       claw.set(-0.2);
       //Claw opens
     }
@@ -125,11 +125,11 @@ public class Robot extends IterativeRobot {
       claw.set(0);
       //Claw doesn't move naturally
     }
-    if (joy.getRawButton(3)) {
+    if (joy.getRawButton(5)) {
       forback.set(0.2);
       //moves claw forward
     }
-    else if (joy.getRawButton(4)) {
+    else if (joy.getRawButton(3)) {
       forback.set(-0.2);
       //moves claw backward
     }
@@ -138,11 +138,11 @@ public class Robot extends IterativeRobot {
       //claw doesn't move naturally
     }
 
-    if (joy.getRawButton(5)) {
+    if (joy.getRawButton(6)) {
       lift.set(0.2);
     //lift moves up
     }
-    else if (joy.getRawButton(6)) {
+    else if (joy.getRawButton(4)) {
       lift.set(-0.2);
       //lift moves down
     }
