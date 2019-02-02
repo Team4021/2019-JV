@@ -102,7 +102,9 @@ public class Robot extends IterativeRobot {
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
+    // puts values on the smartdashboard
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDouble(0);
+    // Controls the camera
   }
 
   /**
