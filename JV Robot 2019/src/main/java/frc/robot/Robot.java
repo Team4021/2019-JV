@@ -30,22 +30,26 @@ public class Robot extends IterativeRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
     double x;
     double y;
-    // Doubles for driving
+    // Doubles for driving axies
     Joystick joy = new Joystick(0);
     Talon frontRight = new Talon(0);
     Talon frontLeft = new Talon(3);
     Talon backRight = new Talon(1);
     Talon backLeft = new Talon(2);
+    // Names driving motor controllers (Correct PDM ports)
     Talon claw = new Talon(4);
+    // Names claw motor controller (No idea if right PDM port)
     Talon forback = new Talon(5);
+    // Names claw moving back and forth motor controller (No idea if right PDM port)
     Talon lift1 = new Talon(6);
     Talon lift2 = new Talon(7);
-    //Names motor controllers
+    // Names lift motor controller (No idea if right PDM port and if actually using lift)
     SpeedControllerGroup Left = new SpeedControllerGroup(frontLeft, backLeft);
     SpeedControllerGroup Right = new SpeedControllerGroup(frontRight, backRight);
-    DifferentialDrive fullSendDrive = new DifferentialDrive(Left, Right);
     SpeedControllerGroup lift = new SpeedControllerGroup(lift1, lift2);
     //Combines two motor controllers
+  DifferentialDrive fullSendDrive = new DifferentialDrive(Left, Right);
+    //Combines left and right into one
 
   /**
    * This function is run when the robot is first started up and should be
@@ -113,26 +117,28 @@ public class Robot extends IterativeRobot {
   public void teleopPeriodic() {
     x = joy.getRawAxis(1);
     y = joy.getRawAxis(0);
+    // Sets x and y to Axis values
     fullSendDrive.arcadeDrive(-x, y);
+    // Motors controllers get x and y values so it can full send it my dude
     if (joy.getRawButton(1)) {
       claw.set(0.2);
-      //Claw closes
+      //Claw closes (Trigger)
     }
     else if (joy.getRawButton(2)) {
       claw.set(-0.2);
-      //Claw opens
+      //Claw opens (Side Button)
     }
     else {
       claw.set(0);
-      //Claw doesn't move naturally
+      //Claw doesn't move naturally 
     }
     if (joy.getRawButton(5)) {
       forback.set(0.2);
-      //moves claw forward
+      //moves claw forward (Top left)
     }
     else if (joy.getRawButton(3)) {
       forback.set(-0.2);
-      //moves claw backward
+      //moves claw backward (Bottom Left)
     }
     else {
       forback.set(0);
@@ -141,11 +147,11 @@ public class Robot extends IterativeRobot {
 
     if (joy.getRawButton(6)) {
       lift.set(0.2);
-    //lift moves up
+    //lift moves up (Top Right)
     }
     else if (joy.getRawButton(4)) {
       lift.set(-0.2);
-      //lift moves down
+      //lift moves down (Bottom Right)
     }
     else {
       lift.set(0);
