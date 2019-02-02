@@ -28,7 +28,6 @@ public class Robot extends IterativeRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-    RobotDrive fullSendDrive;
     double x;
     double y;
     Joystick joy = new Joystick(0);
@@ -43,7 +42,7 @@ public class Robot extends IterativeRobot {
     //Names motor controllers
     SpeedControllerGroup Left = new SpeedControllerGroup(frontLeft, backLeft);
     SpeedControllerGroup Right = new SpeedControllerGroup(frontRight, backRight);
-    DifferentialDrive PizzaTacoDrive = new DifferentialDrive(Left, Right);
+    DifferentialDrive fullSendDrive = new DifferentialDrive(Left, Right);
     SpeedControllerGroup lift = new SpeedControllerGroup(lift1, lift2);
     //Combines two motor controllers
 
@@ -111,9 +110,9 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void teleopPeriodic() {
-    x = joy.getRawAxis(0);
-    y = joy.getRawAxis(1);
-    fullSendDrive.arcadeDrive(x, -y);
+    x = joy.getRawAxis(1);
+    y = joy.getRawAxis(0);
+    fullSendDrive.arcadeDrive(-x, y);
     if (joy.getRawButton(1)) {
       claw.set(0.2);
       //Claw closes
