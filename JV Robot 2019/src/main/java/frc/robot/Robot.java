@@ -94,6 +94,7 @@ public class Robot extends IterativeRobot {
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
     //post to smart dashboard periodically
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDouble(0);
     if (joy.getRawButton(1)) {
       claw.set(0.2);
       //Claw closes (Trigger)
