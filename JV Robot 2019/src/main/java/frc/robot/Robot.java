@@ -8,6 +8,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.drive.*;
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
@@ -26,6 +31,17 @@ public class Robot extends IterativeRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  double x;
+  double y;
+  Joystick joy = new Joystick(0);
+  Talon frontRight = new Talon(0);
+  Talon frontLeft = new Talon(3);
+  Talon backRight = new Talon(1);
+  Talon backLeft = new Talon(2);
+  SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, backLeft);
+  SpeedControllerGroup right = new SpeedControllerGroup(frontRight, backRight);
+  DifferentialDrive fullSendDrive = new DifferentialDrive(left, right);
+
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
   NetworkTableEntry ty = table.getEntry("ty");
@@ -53,6 +69,19 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void robotPeriodic() {
+    x = joy.getRawAxis(0);
+    y = joy.getRawAxis(1);
+    fullSendDrive.arcadeDrive(y, -x);
+    double x = tx.getDouble(0.0);
+    double y = ty.getDouble(0.0);
+    double area = ta.getDouble(0.0);
+    SmartDashboard.putNumber("LimelightX", x);
+    SmartDashboard.putNumber("LimelightY", y);
+    SmartDashboard.putNumber("LimelightArea", area);
+    // puts values on the smartdashboard
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDouble(0);
+    // Controls the camera
+
   }
 
   /**
