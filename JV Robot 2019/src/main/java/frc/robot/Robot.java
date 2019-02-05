@@ -51,8 +51,13 @@ public class Robot extends IterativeRobot {
     SpeedControllerGroup Right = new SpeedControllerGroup(frontRight, backRight);
     SpeedControllerGroup lift = new SpeedControllerGroup(lift1, lift2);
     //Combines two motor controllers
-  DifferentialDrive fullSendDrive = new DifferentialDrive(Left, Right);
+    DifferentialDrive fullSendDrive = new DifferentialDrive(Left, Right);
     //Combines left and right into one
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTableEntry tx = table.getEntry("tx");
+    NetworkTableEntry ty = table.getEntry("ty");
+    NetworkTableEntry ta = table.getEntry("ta");
+    //Bunch of limelight stuff that hopefully works
 
   /**
    * This function is run when the robot is first started up and should be
@@ -81,6 +86,14 @@ public class Robot extends IterativeRobot {
     // Sets x and y to Axis values
     fullSendDrive.arcadeDrive(-x, y);
     // Motors controllers get x and y values so it can full send it my dude
+    double x = tx.getDouble(0.0);
+    double y = ty.getDouble(0.0);
+    double area = ta.getDouble(0.0);
+    //read values periodically
+    SmartDashboard.putNumber("LimelightX", x);
+    SmartDashboard.putNumber("LimelightY", y);
+    SmartDashboard.putNumber("LimelightArea", area);
+    //post to smart dashboard periodically
     if (joy.getRawButton(1)) {
       claw.set(0.2);
       //Claw closes (Trigger)
