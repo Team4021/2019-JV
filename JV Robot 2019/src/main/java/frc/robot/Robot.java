@@ -69,9 +69,9 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void robotPeriodic() {
-    x = joy.getRawAxis(0);
-    y = joy.getRawAxis(1);
-    fullSendDrive.arcadeDrive(y, -x);
+    x = joy.getRawAxis(1);
+    y = joy.getRawAxis(0);
+    fullSendDrive.arcadeDrive(-x, y);
     double x = tx.getDouble(0.0);
     double y = ty.getDouble(0.0);
     double area = ta.getDouble(0.0);
