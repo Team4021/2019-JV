@@ -81,10 +81,10 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void robotPeriodic() {
-    x = joy.getRawAxis(0);
-    y = joy.getRawAxis(1);
+    x = joy.getRawAxis(1);
+    y = joy.getRawAxis(0);
     // Sets x and y to Axis values
-    fullSendDrive.arcadeDrive(y, -x);
+    fullSendDrive.arcadeDrive(-x, y);
     // Motors controllers get x and y values so it can full send it my dude
     double x = tx.getDouble(0.0);
     double y = ty.getDouble(0.0);
