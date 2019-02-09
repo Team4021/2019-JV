@@ -46,14 +46,16 @@ public class Robot extends IterativeRobot {
     // Names driving motor controllers (Correct PDM ports)
     Relay claw = new Relay(4);
     // Names claw motor controller? hopefully
-    Talon forback = new Talon(5);
+
+    /** Talon forback = new Talon(5);
     // Names claw moving back and forth motor controller (No idea if right PDM port)
-    Talon lift1 = new Talon(6);
+    Talon lift1 = new Talon(6);         Not using lift code or for and back
     Talon lift2 = new Talon(7);
     // Names lift motor controller (No idea if right PDM port and if actually using lift)
+    */
     SpeedControllerGroup Left = new SpeedControllerGroup(frontLeft, backLeft);
     SpeedControllerGroup Right = new SpeedControllerGroup(frontRight, backRight);
-    SpeedControllerGroup lift = new SpeedControllerGroup(lift1, lift2);
+    //SpeedControllerGroup lift = new SpeedControllerGroup(lift1, lift2);
     //Combines two motor controllers
     DifferentialDrive fullSendDrive = new DifferentialDrive(Left, Right);
     //Combines left and right into one
@@ -132,7 +134,10 @@ public class Robot extends IterativeRobot {
       claw.set(Relay.Value.kReverse);
       //Claw releases hatch (Side Button)
     }
-    if (joy.getRawButton(5)) {
+
+    
+    /**         Not using forward and backward and lift code
+      if (joy.getRawButton(5)) {
       forback.set(0.2);
       //moves claw forward (Top left)
     }
@@ -156,8 +161,9 @@ public class Robot extends IterativeRobot {
     else {
       lift.set(0);
       //lift doesn't move naturally
+      }
+      */
     }
-  }
   
 
   /**
