@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Talon; 
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.*;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -43,8 +44,8 @@ public class Robot extends IterativeRobot {
     Talon backRight = new Talon(1);
     Talon backLeft = new Talon(2);
     // Names driving motor controllers (Correct PDM ports)
-    Talon claw = new Talon(4);
-    // Names claw motor controller (No idea if right PDM port)
+    Relay claw = new Relay(4);
+    // Names claw motor controller? hopefully
     Talon forback = new Talon(5);
     // Names claw moving back and forth motor controller (No idea if right PDM port)
     Talon lift1 = new Talon(6);
@@ -124,10 +125,10 @@ public class Robot extends IterativeRobot {
     //post to smart dashboard periodically
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDouble(0);
     while (joy.getRawButtonPressed(1) && distance <= 10) {
-      claw.set(0.2);
+      claw.set(Relay.Value.kForward);
     } 
     while (joy.getRawButton(2) && distance > 0) {
-      claw.set(-0.2);
+      claw.set(Relay.Value.kOff);
     }
     if (joy.getRawButton(5)) {
       forback.set(0.2);
