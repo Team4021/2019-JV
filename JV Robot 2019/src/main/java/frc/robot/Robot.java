@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
     Talon backRight = new Talon(1);
     Talon backLeft = new Talon(2);
     // Names driving motor controllers (Correct PDM ports)
-    Relay claw = new Relay(4);
+    Relay claw = new Relay(1);
     // Names claw motor controller? hopefully
 
     /** Talon forback = new Talon(5);
