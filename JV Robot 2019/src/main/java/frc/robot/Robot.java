@@ -126,9 +126,11 @@ public class Robot extends IterativeRobot {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDouble(0);
     while (joy.getRawButtonPressed(1) && distance <= 10) {
       claw.set(Relay.Value.kForward);
+      //Claw grabs hatch (Trigger)
     } 
     while (joy.getRawButton(2) && distance > 0) {
-      claw.set(Relay.Value.kOff);
+      claw.set(Relay.Value.kReverse);
+      //Claw releases hatch (Side Button)
     }
     if (joy.getRawButton(5)) {
       forback.set(0.2);
