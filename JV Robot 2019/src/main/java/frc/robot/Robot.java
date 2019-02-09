@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.Encoder;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -59,8 +58,6 @@ public class Robot extends IterativeRobot {
     //Combines two motor controllers
     DifferentialDrive fullSendDrive = new DifferentialDrive(Left, Right);
     //Combines left and right into one
-    Encoder encyBoi;
-    //Names new encoder
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");
@@ -77,13 +74,6 @@ public class Robot extends IterativeRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    encyBoi = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-    encyBoi.setMaxPeriod(.1);
-    encyBoi.setMinRate(10);
-    encyBoi.setDistancePerPulse(5);
-    encyBoi.setReverseDirection(true);
-    encyBoi.setSamplesToAverage(7);
-    encyBoi.reset();
     CameraServer.getInstance().startAutomaticCapture();
 
   }
@@ -98,13 +88,6 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void robotPeriodic() {
-    int count = encyBoi.get();
-    double distanceRaw = encyBoi.getRaw();
-    double distance = encyBoi.getDistance();
-    double period = encyBoi.getPeriod();
-    double rate = encyBoi.getRate();
-    boolean direction = encyBoi.getDirection();
-    boolean stopped = encyBoi.getStopped();
     x = joy.getRawAxis(1);
     y = joy.getRawAxis(0);
     // Sets x and y to Axis values
@@ -117,22 +100,18 @@ public class Robot extends IterativeRobot {
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
-    SmartDashboard.putNumber("Count", count);
-    SmartDashboard.putNumber("Raw Distance", distanceRaw);
-    SmartDashboard.putNumber("Distance", distance);
-    SmartDashboard.putNumber("Period", period);
-    SmartDashboard.putNumber("Rate", rate);
-    SmartDashboard.putBoolean("Direction", direction);
-    SmartDashboard.putBoolean("Stopped", stopped);
     //post to smart dashboard periodically
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDouble(0);
-    while (joy.getRawButtonPressed(1) && distance <= 10) {
+    if (joy.getRawButton(1)) {
       claw.set(Relay.Value.kForward);
       //Claw grabs hatch (Trigger)
     } 
-    while (joy.getRawButton(2) && distance > 0) {
+    else if (joy.getRawButton(2)) {
       claw.set(Relay.Value.kReverse);
       //Claw releases hatch (Side Button)
+    }
+    else {
+      claw.set(Relay.Value.kOff);
     }
 
     
