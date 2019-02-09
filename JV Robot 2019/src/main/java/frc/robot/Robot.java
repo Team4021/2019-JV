@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot {
     Talon backRight = new Talon(1);
     Talon backLeft = new Talon(2);
     // Names driving motor controllers (Correct PDM ports)
-    Relay claw = new Relay(1);
+    Relay claw = new Relay(0);
     // Names claw motor controller? hopefully
 
     /** Talon forback = new Talon(5);
@@ -98,11 +98,11 @@ public class Robot extends IterativeRobot {
     //post to smart dashboard periodically
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDouble(0);
     if (joy.getRawButton(1)) {
-      claw.set(Relay.Value.kForward);
+      claw.set(Relay.Value.kReverse);
       //Claw grabs hatch (Trigger)
     } 
     else if (joy.getRawButton(2)) {
-      claw.set(Relay.Value.kReverse);
+      claw.set(Relay.Value.kForward);
       //Claw releases hatch (Side Button)
     }
     else {
