@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
 
     /** Talon forback = new Talon(5);
     // Names claw moving back and forth motor controller (No idea if right PDM port)
-    Talon lift1 = new Talon(6);         Not using lift code or for and back
+    Talon lift1 = new Talon(6);                                                                                         Not using lift code or forward and back
     Talon lift2 = new Talon(7);
     // Names lift motor controller (No idea if right PDM port and if actually using lift)
     */
@@ -115,7 +115,7 @@ public class Robot extends IterativeRobot {
     }
 
     
-    /**         Not using forward and backward and lift code
+    /**                                                                            Not using forward and backward and lift code
       if (joy.getRawButton(5)) {
       forback.set(0.2);
       //moves claw forward (Top left)
