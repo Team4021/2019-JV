@@ -114,6 +114,13 @@ public class Robot extends IterativeRobot {
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
+    SmartDashboard.putNumber("Count", count);
+    SmartDashboard.putNumber("Raw Distance", distanceRaw);
+    SmartDashboard.putNumber("Distance", distance);
+    SmartDashboard.putNumber("Period", period);
+    SmartDashboard.putNumber("Rate", rate);
+    SmartDashboard.putBoolean("Direction", direction);
+    SmartDashboard.putBoolean("Stopped", stopped);
     //post to smart dashboard periodically
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDouble(0);
     while (joy.getRawButtonPressed(1) && distance <= 10) {
