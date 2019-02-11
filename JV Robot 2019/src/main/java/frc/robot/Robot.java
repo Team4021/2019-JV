@@ -10,7 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Talon; 
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Relay.Direction;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.*;
@@ -19,6 +21,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -96,14 +99,15 @@ public class Robot extends IterativeRobot {
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
     //post to smart dashboard periodically
+    System.out.println(claw.get());
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDouble(0);
-    if (joy.getRawButton(1)) {
-      claw.set(Relay.Value.kReverse);
+    if (joy.getRawButton(1) == true) {
+      claw.set(Value.kReverse);
+      System.out.println ("should work");
       //Claw grabs hatch (Trigger)
     } 
-    else if (joy.getRawButton(2)) {
-      claw.set(Relay.Value.kForward);
-      //Claw releases hatch (Side Button)
+    else if (joy.getRawButton(2) == true) {
+      claw.set(Value.kReverse);
     }
     else {
       claw.set(Relay.Value.kOff);
