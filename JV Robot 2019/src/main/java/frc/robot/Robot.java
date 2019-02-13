@@ -102,7 +102,7 @@ public class Robot extends IterativeRobot {
     System.out.println(claw.get());
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDouble(0);
     if (joy.getRawButton(1) == true) {
-      claw.set(Value.kReverse);
+      claw.set(Value.kForward);
       System.out.println ("should work");
       //Claw grabs hatch (Trigger)
     } 
