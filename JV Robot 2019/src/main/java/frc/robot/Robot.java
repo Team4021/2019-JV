@@ -42,6 +42,7 @@ public class Robot extends IterativeRobot {
     double y;
     // Doubles for driving axies
     UsbCamera Cam0;
+    UsbCamera Cam1;
     Joystick joy = new Joystick(0);
     Talon frontRight = new Talon(0);
     Talon frontLeft = new Talon(3);
@@ -79,6 +80,7 @@ public class Robot extends IterativeRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
+    Cam1 = CameraServer.getInstance().startAutomaticCapture(1);
 
   }
 
@@ -105,15 +107,14 @@ public class Robot extends IterativeRobot {
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
     //post to smart dashboard periodically
-    System.out.println(claw.get());
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDouble(0);
     if (joy.getRawButton(1) == true) {
       claw.set(Value.kForward);
-      System.out.println ("should work");
       //Claw grabs hatch (Trigger)
     } 
     else if (joy.getRawButton(2) == true) {
       claw.set(Value.kReverse);
+      //Claw lets go of hatch
     }
     else {
       claw.set(Relay.Value.kOff);
