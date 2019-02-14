@@ -21,6 +21,9 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.cscore.UsbCamera;
+
 
 
 /**
@@ -38,6 +41,7 @@ public class Robot extends IterativeRobot {
     double x;
     double y;
     // Doubles for driving axies
+    UsbCamera Cam0;
     Joystick joy = new Joystick(0);
     Talon frontRight = new Talon(0);
     Talon frontLeft = new Talon(3);
@@ -74,6 +78,8 @@ public class Robot extends IterativeRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
+
   }
 
   /**
